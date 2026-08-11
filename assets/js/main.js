@@ -120,6 +120,21 @@
         } else { f.style.borderColor = ''; }
       });
       if (!ok) return;
+
+      // Anfrage per E-Mail an Alex zustellen (öffnet das Mailprogramm mit vorausgefüllten Feldern)
+      var phone = form.querySelector('#phone');
+      var goal = form.querySelector('#goal');
+      var msg = form.querySelector('#msg');
+      var subject = 'Anfrage Personaltraining – ' + name.value.trim();
+      var body =
+        'Name: ' + name.value.trim() + '\n' +
+        'E-Mail: ' + email.value.trim() + '\n' +
+        'Telefon: ' + (phone && phone.value.trim() ? phone.value.trim() : '-') + '\n' +
+        'Ziel: ' + (goal ? goal.value : '-') + '\n\n' +
+        'Nachricht:\n' + (msg && msg.value.trim() ? msg.value.trim() : '-');
+      window.location.href = 'mailto:alex@liftandlife.de?subject=' +
+        encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
       document.getElementById('formFields').style.display = 'none';
       document.getElementById('formSuccess').classList.add('show');
     });
