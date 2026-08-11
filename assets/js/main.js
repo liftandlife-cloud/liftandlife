@@ -121,10 +121,39 @@
       });
       if (!ok) return;
 
-      // Anfrage per E-Mail an Alex zustellen (öffnet das Mailprogramm mit vorausgefüllten Feldern)
       var phone = form.querySelector('#phone');
       var goal = form.querySelector('#goal');
       var msg = form.querySelector('#msg');
+      var keyField = form.querySelector('[name="access_key"]');
+      var accessKey = keyField ? keyField.value.trim() : '';
+      var submitBtn = form.querySelector('button[type="submit"]');
+
+      var showSuccess = function () {
+        document.getElementById('formFields').style.display = 'none';
+        document.getElementById('formSuccess').classList.add('show');
+      };
+
+      // Echter Web3Forms-Key hinterlegt -> im Hintergrund an alex@liftandlife.de zustellen
+      if (accessKey && accessKey.indexOf('DEIN_') !== 0) {
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet …'; }
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (j) {
+            if (j && j.success) { showSuccess(); }
+            else { throw new Error('web3forms'); }
+          })
+          .catch(function () {
+            if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Check-up-Gespräch anfragen'; }
+            alert('Das Senden hat gerade nicht geklappt. Schreib mir bitte direkt an alex@liftandlife.de oder per WhatsApp.');
+          });
+        return;
+      }
+
+      // Fallback (solange kein Key hinterlegt): Mailprogramm mit vorausgefüllter Mail öffnen
       var subject = 'Anfrage Personaltraining – ' + name.value.trim();
       var body =
         'Name: ' + name.value.trim() + '\n' +
@@ -134,9 +163,7 @@
         'Nachricht:\n' + (msg && msg.value.trim() ? msg.value.trim() : '-');
       window.location.href = 'mailto:alex@liftandlife.de?subject=' +
         encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-
-      document.getElementById('formFields').style.display = 'none';
-      document.getElementById('formSuccess').classList.add('show');
+      showSuccess();
     });
   }
 
