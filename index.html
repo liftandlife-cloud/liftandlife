@@ -10,9 +10,7 @@
 <meta property="og:description" content="Dein exklusives 1:1 Coaching für Muskelaufbau, Fettverlust & mehr Gesundheit.">
 <meta property="og:type" content="website">
 <link rel="icon" href="assets/img/logo-nav.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -488,9 +486,9 @@
       <div>
         <h4>Rechtliches</h4>
         <ul>
-          <li><a href="#">Impressum</a></li>
-          <li><a href="#">Datenschutzerklärung</a></li>
-          <li><a href="#">AGB</a></li>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutzerklärung</a></li>
+          <li><a href="agb.html">AGB</a></li>
         </ul>
       </div>
     </div>
@@ -504,6 +502,22 @@
     </div>
   </div>
 </footer>
+
+<!-- ================= RABATT-POPUP (Sportstech) ================= -->
+<div class="promo-overlay" id="promoOverlay" role="dialog" aria-modal="true" aria-labelledby="promoTitle">
+  <div class="promo">
+    <button class="close" id="promoClose" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <span class="badge">🏋️ 15% Rabatt bei Sportstech</span>
+    <h3 id="promoTitle">Vervollständige dein Homegym</h3>
+    <p>Du willst dir zu Hause dein eigenes Setup aufbauen? Bei <strong>sportstech.de</strong> bekommst du mit meinem Code <strong>15% Rabatt</strong> auf dein Equipment.</p>
+    <div class="code">
+      <b id="promoCode">ALEX15</b>
+      <button class="copy" id="promoCopy" type="button">Code kopieren</button>
+    </div>
+    <a class="btn btn--primary go" href="https://www.sportstech.de" target="_blank" rel="noopener sponsored">Zu sportstech.de →</a>
+    <small>Anzeige · Rabattcode einlösbar auf sportstech.de</small>
+  </div>
+</div>
 
 <script src="assets/js/main.js"></script>
 </body>

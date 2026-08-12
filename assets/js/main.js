@@ -178,4 +178,49 @@
   } else {
     document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
   }
+
+  /* ---- Rabatt-Popup (Sportstech), einmal alle 7 Tage, 20s nach Seitenaufruf ---- */
+  var overlay = document.getElementById('promoOverlay');
+  if (overlay) {
+    var KEY = 'liftlife_promo_seen';
+    var SNOOZE = 7 * 24 * 60 * 60 * 1000; // 7 Tage
+    var lastSeen = 0;
+    try { lastSeen = parseInt(localStorage.getItem(KEY), 10) || 0; } catch (e) {}
+
+    var closePromo = function () {
+      overlay.classList.remove('open');
+      try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {}
+      document.removeEventListener('keydown', onEsc);
+    };
+    var onEsc = function (e) { if (e.key === 'Escape') closePromo(); };
+    var openPromo = function () {
+      overlay.classList.add('open');
+      document.addEventListener('keydown', onEsc);
+    };
+
+    if (Date.now() - lastSeen > SNOOZE) {
+      setTimeout(openPromo, 20000);
+    }
+
+    document.getElementById('promoClose').addEventListener('click', closePromo);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closePromo(); });
+
+    var copyBtn = document.getElementById('promoCopy');
+    copyBtn.addEventListener('click', function () {
+      var code = document.getElementById('promoCode').textContent.trim();
+      var done = function () {
+        copyBtn.textContent = 'Kopiert ✓';
+        copyBtn.classList.add('done');
+        setTimeout(function () { copyBtn.textContent = 'Code kopieren'; copyBtn.classList.remove('done'); }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(done, done);
+      } else {
+        var t = document.createElement('textarea');
+        t.value = code; document.body.appendChild(t); t.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(t); done();
+      }
+    });
+  }
 })();

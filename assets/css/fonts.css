@@ -1,0 +1,15 @@
+/* Selbst gehostete Schriften (Google Fonts, latin, variable) – DSGVO-freundlich, keine Anfrage an Google */
+@font-face{
+  font-family:'Archivo';
+  font-style:normal;
+  font-weight:500 800;
+  font-display:swap;
+  src:url('../fonts/archivo.woff2') format('woff2');
+}
+@font-face{
+  font-family:'Inter';
+  font-style:normal;
+  font-weight:400 700;
+  font-display:swap;
+  src:url('../fonts/inter.woff2') format('woff2');
+}
