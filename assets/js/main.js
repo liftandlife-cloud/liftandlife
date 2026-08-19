@@ -205,9 +205,15 @@
     document.getElementById('promoClose').addEventListener('click', closePromo);
     overlay.addEventListener('click', function (e) { if (e.target === overlay) closePromo(); });
 
+    // Custom-Events für Vercel Analytics (erscheinen im Dashboard unter "Events")
+    var track = function (name) { try { if (window.va) window.va('event', { name: name }); } catch (e) {} };
+    var goLink = overlay.querySelector('.go');
+    if (goLink) goLink.addEventListener('click', function () { track('Sportstech Klick'); });
+
     var copyBtn = document.getElementById('promoCopy');
     copyBtn.addEventListener('click', function () {
       var code = document.getElementById('promoCode').textContent.trim();
+      track('Rabattcode kopiert');
       var done = function () {
         copyBtn.textContent = 'Kopiert ✓';
         copyBtn.classList.add('done');
